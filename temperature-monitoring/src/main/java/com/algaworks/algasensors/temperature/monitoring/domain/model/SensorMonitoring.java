@@ -3,6 +3,7 @@ package com.algaworks.algasensors.temperature.monitoring.domain.model;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,8 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 public class SensorMonitoring {
 
-    @AttributeOverride(name = "value", column = @Column(name = "id", columnDefinition = "BIGINT"))
+    @Id
+    @AttributeOverride(name = "value", column = @Column(name = "id", columnDefinition = "bigint"))
     private SensorId id;
 
     @Column(name = "last_temperature")
