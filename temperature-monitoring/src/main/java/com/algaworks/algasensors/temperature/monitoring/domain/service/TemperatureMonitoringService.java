@@ -29,6 +29,9 @@ public class TemperatureMonitoringService {
 
   @Transactional
   public void processTemperatureReading(TemperatureLogData temperatureLogData) {
+    if (temperatureLogData.value().equals(10.5)) {
+      throw new RuntimeException("Simulated error");
+    }
 
     sensorMonitoringRepository.findById(new SensorId(temperatureLogData.sensorId()))
         .ifPresentOrElse(
@@ -38,7 +41,7 @@ public class TemperatureMonitoringService {
 
   private void handleSensorMonitoring(TemperatureLogData temperatureLogData,
       SensorMonitoring sensor) {
-    if (sensor.getEnabled()) {
+    if (Boolean.TRUE.equals(sensor.getEnabled())) {
       sensor.setLastTemperature(temperatureLogData.value());
       sensor.setUpdatedAt(OffsetDateTime.now());
       sensorMonitoringRepository.save(sensor);
