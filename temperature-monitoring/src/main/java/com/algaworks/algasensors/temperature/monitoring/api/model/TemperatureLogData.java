@@ -5,7 +5,7 @@ import io.hypersistence.tsid.TSID;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-public record TemperatureLogOutput(
+public record TemperatureLogData(
         UUID id,
         TSID sensorId,
         OffsetDateTime registeredAt,
@@ -41,8 +41,8 @@ public record TemperatureLogOutput(
             return this;
         }
 
-        public TemperatureLogOutput build() {
-            return new TemperatureLogOutput(id, sensorId, registeredAt, value);
+        public TemperatureLogData build() {
+            return new TemperatureLogData(id, sensorId, registeredAt, value);
         }
     }
 
