@@ -23,7 +23,7 @@ public class RabbitMQListener {
     this.temperatureMonitoringService = temperatureMonitoringService;
   }
 
-  @RabbitListener(queues = QUEUE_NAME)
+  @RabbitListener(queues = QUEUE_NAME, concurrency = "2-3")
   public void handle(@Payload TemperatureLogData temperatureLogData,
       @Headers Map<String, Object> headers) {
     log.info("Received temperature log data: {}", temperatureLogData);
