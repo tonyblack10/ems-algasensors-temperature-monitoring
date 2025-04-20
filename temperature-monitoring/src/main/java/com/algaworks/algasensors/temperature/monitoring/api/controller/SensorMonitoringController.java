@@ -7,6 +7,7 @@ import com.algaworks.algasensors.temperature.monitoring.domain.repository.Sensor
 import io.hypersistence.tsid.TSID;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/sensors/{sensorId}/monitoring")
@@ -44,8 +45,12 @@ public class SensorMonitoringController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void disable(@PathVariable TSID sensorId) {
         var sensorMonitoring = findByIdOrDefault(sensorId);
-        sensorMonitoring.setEnabled(false);
 
+        if (Boolean.TRUE.equals(sensorMonitoring.getEnabled())) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        sensorMonitoring.setEnabled(false);
         sensorMonitoringRepository.saveAndFlush(sensorMonitoring);
     }
 
